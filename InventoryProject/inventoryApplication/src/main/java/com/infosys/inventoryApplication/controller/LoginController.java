@@ -22,7 +22,7 @@ import com.infosys.inventoryApplication.service.InventoryUserService;
 
 @RestController
 @RequestMapping("/invent")
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3131"}, allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS})
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS})
 public class LoginController {
 	@Autowired
 	private InventoryUserRepository repository;

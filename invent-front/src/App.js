@@ -12,6 +12,7 @@ import NewEntry from "./Components/ProductComponent/NewEntry";
 import ProductReport from "./Components/ProductComponent/ProductReport";
 import UpdatePrice from "./Components/ProductComponent/UpdatePrice";
 import ProductPriceEdit from "./Components/ProductComponent/ProductPriceEdit";
+import ProductStockEdit from "./Components/ProductComponent/ProductStockEdit";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/product-list" element={<ProductReport />} />
         <Route path="/update-price/:productCode" element={<UpdatePrice />} />
         <Route path="/edit-price/:pid" element={<ProductPriceEdit />} />
+        <Route path="/edit-stock/:pid/:no" element={<ProductStockEdit />} />
       </Routes>
     </BrowserRouter>
   );

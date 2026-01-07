@@ -100,3 +100,11 @@ export const fetchVendors = async () => {
     return [];
   }
 };
+
+
+export const editProductStock=(product,qty,flag)=> {
+    return axios.put(`${BASE_URL}/product/edit-stock/${qty}/${flag}`,product, {
+        withCredentials: true
+    });
+    }
+ 

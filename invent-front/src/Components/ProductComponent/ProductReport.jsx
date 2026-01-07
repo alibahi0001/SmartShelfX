@@ -84,6 +84,7 @@ const ProductReport = () => {
                     </td>
                     <td style={{ padding: '12px', textAlign: 'left', display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                       <button
+                        onClick={() => navigate(`/edit-stock/${product.productCode}/2`)}
                         style={{
                           padding: '6px 12px',
                           backgroundColor: '#ffc107',
@@ -98,6 +99,7 @@ const ProductReport = () => {
                         Issue
                       </button>
                       <button
+                        onClick={() => navigate(`/edit-stock/${product.productCode}/1`)}
                         style={{
                           padding: '6px 12px',
                           backgroundColor: '#28a745',

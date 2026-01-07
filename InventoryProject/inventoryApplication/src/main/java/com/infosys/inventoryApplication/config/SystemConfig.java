@@ -32,20 +32,19 @@ public class SystemConfig {
     
     @Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-            .cors().and()
-            .authorizeHttpRequests((authorize) ->
-        authorize.requestMatchers(HttpMethod.GET, "/invent/**").permitAll()
-               .requestMatchers("/invent/**").permitAll()
-               .anyRequest().authenticated()
-               );    		
+        http
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .authorizeHttpRequests(authorize -> 
+                authorize.anyRequest().permitAll()
+            );    		
 	      return http.build();
 	}
  
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:3131"));
+        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);

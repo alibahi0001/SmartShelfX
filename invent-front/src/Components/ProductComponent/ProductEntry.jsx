@@ -49,7 +49,7 @@ const ProductEntry = () => {
     }
   };
 
-  // Fetch code + dropdowns on mount
+  // Fetch code 
   useEffect(() => {
     const fetchData = async () => {
       const cached = window.localStorage.getItem('productCode');
