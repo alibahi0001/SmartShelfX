@@ -113,36 +113,6 @@ const ProductReport = () => {
                       >
                         Purchase
                       </button>
-                      <button
-                        style={{
-                          padding: '6px 12px',
-                          backgroundColor: '#6c757d',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '4px',
-                          cursor: 'pointer',
-                          fontSize: '12px',
-                          fontWeight: 'bold'
-                        }}
-                        onClick={() => navigate(`/update-price/${product.productCode}`)}
-                      >
-                        Price Update
-                      </button>
-                      <button
-                        style={{
-                          padding: '6px 12px',
-                          backgroundColor: '#dc3545',
-                          color: 'white',
-                          border: 'none',
-                          borderRadius: '4px',
-                          cursor: 'pointer',
-                          fontSize: '12px',
-                          fontWeight: 'bold'
-                        }}
-                        onClick={() => handleDelete(product.productCode)}
-                      >
-                        Delete
-                      </button>
                     </td>
                   </tr>
                 ))}
@@ -157,7 +127,7 @@ const ProductReport = () => {
 
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
           <button
-            onClick={() => navigate('/admin')}
+            onClick={() => navigate(-1)}
             style={{
               padding: '10px 20px',
               backgroundColor: '#6c757d',
@@ -169,7 +139,7 @@ const ProductReport = () => {
               fontWeight: 'bold'
             }}
           >
-            Back to Admin
+            Back
           </button>
         </div>
       </div>

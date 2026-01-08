@@ -69,11 +69,8 @@ public class TransactionDaoImpl implements TransactionDao {
         return repository.getDemandByProduct(productId);
     }
 
-	@Override
-	public Transaction findTransactionById(Long id) {
-		// TODO Auto-generated method stub
-		return repository.findTransactionsById(id);
-	}
+	
+	
 	
 	public List<ProductSale> getProductWiseTotalSale(){
 		return repository.getProductWiseTotalSale();

@@ -13,6 +13,8 @@ import ProductReport from "./Components/ProductComponent/ProductReport";
 import UpdatePrice from "./Components/ProductComponent/UpdatePrice";
 import ProductPriceEdit from "./Components/ProductComponent/ProductPriceEdit";
 import ProductStockEdit from "./Components/ProductComponent/ProductStockEdit";
+import TransactionIn from "./Components/TransactionComponent/TransactionIn";
+import TransactionOut from "./Components/TransactionComponent/TransactionOut";
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
         <Route path="/update-price/:productCode" element={<UpdatePrice />} />
         <Route path="/edit-price/:pid" element={<ProductPriceEdit />} />
         <Route path="/edit-stock/:pid/:no" element={<ProductStockEdit />} />
+        <Route path="/transaction-in" element={<TransactionIn />} />
+        <Route path="/transaction-out" element={<TransactionOut />} />
       </Routes>
     </BrowserRouter>
   );
