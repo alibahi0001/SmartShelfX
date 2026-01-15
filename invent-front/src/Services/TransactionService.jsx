@@ -44,7 +44,7 @@ export const getDemandByProduct = (id) => {
     })
 }
 
-export const getProductWiseTotalSlae = () => {
+export const getProductWiseTotalSale = () => {
     return axios.get(ANA_URL, {
       withCredentials: true
 });

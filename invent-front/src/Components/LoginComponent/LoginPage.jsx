@@ -19,6 +19,20 @@ const LoginPage = () => {
       const response = await loginUser(username, password);
       const role = response.data.role;
 
+      console.log('Login successful, username:', username);
+      console.log('Full response:', response.data);
+      
+      // Store all user data from login response
+      window.localStorage.setItem('role', role);
+      window.localStorage.setItem('username', username);
+      window.localStorage.setItem('userRole', role);
+      window.localStorage.setItem('personalName', response.data.personalName || username);
+      window.localStorage.setItem('email', response.data.email || response.data.emailId || response.data.mail || '');
+      window.localStorage.setItem('userId', response.data.userId || response.data.username);
+      window.localStorage.setItem('userDetails', JSON.stringify(response.data));
+      
+      console.log('Stored to localStorage - username:', window.localStorage.getItem('username'));
+
       if (role === 'ADMIN') {
         navigate('/admin');
       } else if (role === 'MANAGER') {
@@ -27,6 +41,7 @@ const LoginPage = () => {
         navigate('/vendor');
       } else {
         setError('Invalid role received from server');
+        window.localStorage.removeItem('role');
       }
     } catch (err) {
       setError('Login failed. Please check your credentials.');

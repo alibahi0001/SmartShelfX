@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.infosys.inventoryApplication.bean.ProductSale;
 import com.infosys.inventoryApplication.bean.Transaction;
+import com.infosys.inventoryApplication.bean.TransactionDetail;
 import com.infosys.inventoryApplication.dao.TransactionDao;
 import com.infosys.inventoryApplication.service.TransactionService;
 
@@ -57,6 +58,12 @@ public class TransactionController {
     public List<Transaction> findTransactionsByType(@PathVariable String type) {
         return transactionDao.findTransactionsByType(type);
     }
+    
+    // FIND TRANSACTION DETAILS BY TYPE WITH PRODUCT NAME AND VENDOR ID
+    @GetMapping("/trans/details/{type}")
+    public List<TransactionDetail> findTransactionDetailsByType(@PathVariable String type) {
+        return transactionDao.findTransactionDetailsByType(type);
+    }
 
     // PRODUCT ANALYSIS – DEMAND BY PRODUCT
     @GetMapping("/analysis/{id}")
@@ -66,8 +73,7 @@ public class TransactionController {
     
     @GetMapping("/analysis")
     public List<ProductSale> getProductWiseTotalSale(){
-    	return transactionDao.getProductWiseTotalSale();
+    	return service.getProductWiseTotalSale();
     }
-    
 
 }

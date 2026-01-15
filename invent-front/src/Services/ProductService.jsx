@@ -40,8 +40,26 @@ export const getProductAnalysis = async () => {
   return response;
 };
 
-export const deleteProduct = (productCode) => {
-  return axios.delete(`${BASE_URL}/product/delete/${productCode}`);
+// Delete by product code. Try a few common REST patterns to accommodate backend.
+export const deleteProduct = async (productId) => {
+  const candidates = [
+    `${BASE_URL}/product/${productId}`,
+    `${BASE_URL}/product/delete/${productId}`,
+    `${BASE_URL}/product/id/${productId}`,
+  ];
+
+  let lastError;
+  for (const url of candidates) {
+    try {
+      console.log('Attempting delete via:', url);
+      const res = await axios.delete(url);
+      return res;
+    } catch (err) {
+      lastError = err;
+      console.warn('Delete failed at', url, err?.response?.status);
+    }
+  }
+  throw lastError || new Error('Delete endpoint not reachable');
 };
 
 export const updatePurchasePrice = (productCode, price) => {

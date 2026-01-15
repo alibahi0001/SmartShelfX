@@ -13,6 +13,8 @@ const ManagerMenu = () => {
       </div>
 
       <div style={{ background: '#f2a500', padding: '8px 16px', display: 'flex', gap: 24, alignItems: 'center', position: 'relative' }}>
+        {/* Show User Details */}
+        <Link to="/user-details" style={{ fontSize: 18, fontWeight: 600, textDecoration: 'none', color: '#333' }}>Show User Details</Link>
         {/* SKU dropdown */}
         <div
           style={{ position: 'relative', cursor: 'pointer' }}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { findTransactionsByType } from '../../Services/TransactionService';
+import { getProductById } from '../../Services/ProductService';
 
 const TransactionOut = () => {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ const TransactionOut = () => {
   const [error, setError] = useState(null);
   const [filteredList, setFilteredList] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [productMap, setProductMap] = useState({});
 
   useEffect(() => {
     loadTransactionOut();
@@ -18,8 +20,12 @@ const TransactionOut = () => {
     try {
       setLoading(true);
       const response = await findTransactionsByType('OUT');
-      setTransactionList(response.data || []);
-      setFilteredList(response.data || []);
+      const transactions = response.data || [];
+      setTransactionList(transactions);
+      setFilteredList(transactions);
+
+      const map = await buildProductMap(transactions);
+      setProductMap(map);
       setError(null);
     } catch (err) {
       console.error('Error fetching transactions:', err);
@@ -29,17 +35,38 @@ const TransactionOut = () => {
     }
   };
 
+  const buildProductMap = async (transactions) => {
+    const uniqueIds = [...new Set(transactions.map((t) => t.productId).filter(Boolean))];
+    const entries = await Promise.all(
+      uniqueIds.map(async (id) => {
+        try {
+          const product = await getProductById(id);
+          return [id, product];
+        } catch (err) {
+          console.error('Error fetching product by id', id, err);
+          return [id, null];
+        }
+      })
+    );
+    return Object.fromEntries(entries);
+  };
+
   const handleSearch = (searchValue) => {
     setSearchTerm(searchValue);
     if (searchValue.trim() === '') {
       setFilteredList(transactionList);
     } else {
-      const filtered = transactionList.filter(
-        (transaction) =>
+      const filtered = transactionList.filter((transaction) => {
+        const product = productMap[transaction.productId];
+        const productName = product?.productName || '';
+        const vendorId = product?.vendorId?.toString() || '';
+        return (
           transaction.transactionId?.toString().includes(searchValue) ||
           transaction.productId?.toString().includes(searchValue) ||
-          transaction.userId?.toLowerCase().includes(searchValue.toLowerCase())
-      );
+          productName.toLowerCase().includes(searchValue.toLowerCase()) ||
+          vendorId.toLowerCase().includes(searchValue.toLowerCase())
+        );
+      });
       setFilteredList(filtered);
     }
   };
@@ -117,11 +144,11 @@ const TransactionOut = () => {
                   <thead>
                     <tr style={{ backgroundColor: '#c41e3a', color: 'white' }}>
                       <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Transaction Id</th>
-                      <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Product Id</th>
+                      <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Product</th>
                       <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Rate</th>
                       <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Quantity</th>
                       <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Transaction Value</th>
-                      <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>User Id</th>
+                      <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Vendor Id</th>
                       <th style={{ padding: '12px', textAlign: 'left', borderBottom: '2px solid #ddd' }}>Transaction Date</th>
                     </tr>
                   </thead>
@@ -140,11 +167,15 @@ const TransactionOut = () => {
                         }
                       >
                         <td style={{ padding: '12px', textAlign: 'left' }}>{transaction.transactionId}</td>
-                        <td style={{ padding: '12px', textAlign: 'left' }}>{transaction.productId}</td>
+                        <td style={{ padding: '12px', textAlign: 'left' }}>
+                          {productMap[transaction.productId]?.productName || transaction.productId}
+                        </td>
                         <td style={{ padding: '12px', textAlign: 'left' }}>{transaction.rate}</td>
                         <td style={{ padding: '12px', textAlign: 'left' }}>{transaction.quantity}</td>
                         <td style={{ padding: '12px', textAlign: 'left' }}>{transaction.transactionValue}</td>
-                        <td style={{ padding: '12px', textAlign: 'left' }}>{transaction.userId}</td>
+                        <td style={{ padding: '12px', textAlign: 'left' }}>
+                          {productMap[transaction.productId]?.vendorId ?? transaction.userId}
+                        </td>
                         <td style={{ padding: '12px', textAlign: 'left' }}>{transaction.transactionDate}</td>
                       </tr>
                     ))}

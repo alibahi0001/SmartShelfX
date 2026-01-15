@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.infosys.inventoryApplication.bean.ProductSale;
 import com.infosys.inventoryApplication.bean.Transaction;
+import com.infosys.inventoryApplication.bean.TransactionDetail;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
@@ -24,7 +25,10 @@ public List<ProductSale> getProductWiseTotalSale();
 @Query("SELECT s.transactionValue from Transaction s WHERE s.transactionType='OUT' and productId=?1")
 public List<Double> getDemandByProduct(String productId);
 
-public Transaction findTransactionsByTransactionId(Long transactionId);
+@Query("SELECT new com.infosys.inventoryApplication.bean.TransactionDetail(t.transactionId, t.transactionType, t.productId, p.productName, t.rate, t.quantity, t.transactionValue, p.vendorId, t.transactionDate) " +
+       "FROM Transaction t JOIN Product p ON t.productId = p.productId " +
+       "WHERE t.transactionType = ?1")
+public List<TransactionDetail> findTransactionDetailsByType(String type);
 
 
 

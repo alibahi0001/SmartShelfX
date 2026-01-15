@@ -7,8 +7,15 @@ const ProductReport = () => {
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    const role = window.localStorage.getItem('role');
+    console.log('Stored role:', role);
+    console.log('Role type:', typeof role);
+    console.log('Is ADMIN check:', role === 'ADMIN');
+    setIsAdmin(role === 'ADMIN');
+
     const fetchProductAnalysis = async () => {
       try {
         setLoading(true);
@@ -32,10 +39,11 @@ const ProductReport = () => {
     return { color: 'blue', fontWeight: 'bold' };
   };
 
-  const handleDelete = (productCode) => {
+  const handleDelete = (productId) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
-      deleteProduct(productCode).then(() => {
-        setProductList(productList.filter(p => p.productCode !== productCode));
+      deleteProduct(productId).then(() => {
+        setProductList(productList.filter(p => p.productId !== productId));
+        alert('Product deleted successfully!');
       }).catch(err => {
         console.error('Error deleting product:', err);
         alert('Failed to delete product');
@@ -113,6 +121,40 @@ const ProductReport = () => {
                       >
                         Purchase
                       </button>
+                      {isAdmin && (
+                        <>
+                          <button
+                            onClick={() => navigate(`/update-price/${product.productCode}`)}
+                            style={{
+                              padding: '6px 12px',
+                              backgroundColor: '#007bff',
+                              color: 'white',
+                              border: 'none',
+                              borderRadius: '4px',
+                              cursor: 'pointer',
+                              fontSize: '12px',
+                              fontWeight: 'bold'
+                            }}
+                          >
+                            Update
+                          </button>
+                          <button
+                            onClick={() => handleDelete(product.productId)}
+                            style={{
+                              padding: '6px 12px',
+                              backgroundColor: '#dc3545',
+                              color: 'white',
+                              border: 'none',
+                              borderRadius: '4px',
+                              cursor: 'pointer',
+                              fontSize: '12px',
+                              fontWeight: 'bold'
+                            }}
+                          >
+                            Delete
+                          </button>
+                        </>
+                      )}
                     </td>
                   </tr>
                 ))}

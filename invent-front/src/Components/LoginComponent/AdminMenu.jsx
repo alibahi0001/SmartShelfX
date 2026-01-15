@@ -13,6 +13,8 @@ const AdminMenu = () => {
       </div>
 
       <div style={{ background: '#f2a500', padding: '8px 16px', display: 'flex', gap: 24, alignItems: 'center', position: 'relative' }}>
+        {/* Show User Details */}
+        <Link to="/user-details" style={{ fontSize: 18, fontWeight: 600, textDecoration: 'none', color: '#333' }}>Show User Details</Link>
         {/* SKU dropdown */}
         <div
           style={{ position: 'relative', cursor: 'pointer' }}
@@ -41,6 +43,7 @@ const AdminMenu = () => {
               <div style={{ padding: '8px 12px', fontWeight: 700, color: '#666' }}>Product</div>
               <Link to="/product-entry" style={{ display: 'block', padding: '8px 12px', textDecoration: 'none', color: '#333' }}>Product Addition</Link>
               <Link to="/product-list" style={{ display: 'block', padding: '8px 12px', textDecoration: 'none', color: '#333' }}>Product List</Link>
+              <Link to="/product-analysis" style={{ display: 'block', padding: '8px 12px', textDecoration: 'none', color: '#333' }}>Product Analysis</Link>
             </div>
           )}
         </div>

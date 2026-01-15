@@ -1,10 +1,10 @@
-
 package com.infosys.inventoryApplication.dao;
 
 import java.util.List;
 
 import com.infosys.inventoryApplication.bean.ProductSale;
 import com.infosys.inventoryApplication.bean.Transaction;
+import com.infosys.inventoryApplication.bean.TransactionDetail;
 
 public interface TransactionDao {
 
@@ -25,6 +25,8 @@ public interface TransactionDao {
 	public Transaction findTransactionById(Long id);
 	
 	public List<ProductSale> getProductWiseTotalSale();
+	
+	public List<TransactionDetail> findTransactionDetailsByType(String type);
 
 
 }

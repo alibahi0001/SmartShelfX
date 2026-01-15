@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.infosys.inventoryApplication.bean.Transaction;
 import com.infosys.inventoryApplication.bean.Product;
 import com.infosys.inventoryApplication.bean.ProductSale;
+import com.infosys.inventoryApplication.bean.TransactionDetail;
 
 @Service
 @Repository
@@ -69,11 +70,19 @@ public class TransactionDaoImpl implements TransactionDao {
         return repository.getDemandByProduct(productId);
     }
 
+	@Override
+	public Transaction findTransactionById(Long id) {
+		return repository.findById(id).orElse(null);
+	}
 	
-	
-	
+	@Override
 	public List<ProductSale> getProductWiseTotalSale(){
 		return repository.getProductWiseTotalSale();
+	}
+	
+	@Override
+	public List<TransactionDetail> findTransactionDetailsByType(String type) {
+		return repository.findTransactionDetailsByType(type);
 	}
 
 

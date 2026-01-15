@@ -4,6 +4,7 @@ import RegisterPage from "./Components/LoginComponent/RegisterPage";
 import AdminMenu from "./Components/LoginComponent/AdminMenu";
 import ManagerMenu from "./Components/LoginComponent/ManagerMenu";
 import VendorMenu from "./Components/LoginComponent/VendorMenu";
+import ShowUserDetails from "./Components/LoginComponent/ShowUserDetails";
 import SKUReport from "./Components/SKUComponent/SKUReport";
 import SKUEntry from "./Components/SKUComponent/SKUEntry";
 import SKUEdit from "./Components/SKUComponent/SKUEdit";
@@ -15,6 +16,7 @@ import ProductPriceEdit from "./Components/ProductComponent/ProductPriceEdit";
 import ProductStockEdit from "./Components/ProductComponent/ProductStockEdit";
 import TransactionIn from "./Components/TransactionComponent/TransactionIn";
 import TransactionOut from "./Components/TransactionComponent/TransactionOut";
+import ProductPieAnalysis from "./Components/ChartComponent/ProductPieAnalysis";
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/user-details" element={<ShowUserDetails />} />
         <Route path="/admin" element={<AdminMenu />} />
         <Route path="/manager" element={<ManagerMenu />} />
         <Route path="/vendor" element={<VendorMenu />} />
@@ -37,6 +40,7 @@ function App() {
         <Route path="/edit-stock/:pid/:no" element={<ProductStockEdit />} />
         <Route path="/transaction-in" element={<TransactionIn />} />
         <Route path="/transaction-out" element={<TransactionOut />} />
+        <Route path="/product-analysis" element={<ProductPieAnalysis />} />
       </Routes>
     </BrowserRouter>
   );
